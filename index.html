@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,27 +7,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>EnesXVC Scripts</h1>
-        <p>Aradığınız scripti bulmak için arama yapın ya da aşağıdaki butonlara tıklayın</p>
-        <input type="text" id="search" placeholder="Script arayın..." oninput="filterButtons()">
-    </header>
-    <main>
-        <div class="buttons">
-            <button class="script-button" data-link="https://example.com/script1">Script 1</button>
-            <button class="script-button" data-link="https://example.com/script2">Script 2</button>
-            <button class="script-button" data-link="https://example.com/script3">Script 3</button>
-            <button class="script-button" data-link="https://example.com/script4">Script 4</button>
-            <button class="script-button" data-link="https://example.com/script5">Script 5</button>
-        </div>
-    </main>
-    <div id="confirmation-popup" class="popup">
-        <div class="popup-content">
-            <p>Siteye gitmek ister misiniz?</p>
-            <button id="confirm-yes">Evet</button>
-            <button id="confirm-no">Hayır</button>
-        </div>
+    <div class="game-container">
+        <header>
+            <h1>EnesXVC Scripts</h1>
+            <p>Scriptler ile ilgili çeşitli linklere tıklayarak erişebilirsiniz!</p>
+        </header>
+        
+        <!-- Script almak için 5 buton -->
+        <button class="scriptButton" data-url="https://example.com/script1">Script 1</button>
+        <button class="scriptButton" data-url="https://example.com/script2">Script 2</button>
+        <button class="scriptButton" data-url="https://example.com/script3">Script 3</button>
+        <button class="scriptButton" data-url="https://example.com/script4">Script 4</button>
+        <button class="scriptButton" data-url="https://example.com/script5">Script 5</button>
+
     </div>
-    <script src="script.js"></script>
+
+    <script src="game.js"></script>
 </body>
 </html>
