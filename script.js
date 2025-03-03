@@ -1,22 +1,28 @@
 // Butonlara tıklama olayını dinliyoruz
 const buttons = document.querySelectorAll('.script-button');
 const linkOutput = document.getElementById('link');
-const goButton = document.getElementById('goButton');
+const confirmationPopup = document.getElementById('confirmation-popup');
+const confirmYes = document.getElementById('confirm-yes');
+const confirmNo = document.getElementById('confirm-no');
+let currentLink = "";
 
 // Her butona tıklanıldığında, ilgili linki input alanına ekleyelim
 buttons.forEach(button => {
     button.addEventListener('click', function() {
-        const link = this.getAttribute('data-link');
-        linkOutput.value = link;
+        currentLink = this.getAttribute('data-link');
+        linkOutput.value = currentLink;
+        confirmationPopup.style.display = 'flex';  // Pop-up'ı gösteriyoruz
     });
 });
 
-// Git butonuna tıklanıldığında, input'taki URL'ye yönlendirelim
-goButton.addEventListener('click', function() {
-    const url = linkOutput.value;
-    if (url) {
-        window.location.href = url;  // Kullanıcıyı belirtilen URL'ye yönlendirecek
-    }
+// Evet butonuna tıklanırsa, link'e yönlendirelim
+confirmYes.addEventListener('click', function() {
+    window.location.href = currentLink;
+});
+
+// Hayır butonuna tıklanırsa, pop-up'ı gizleyelim
+confirmNo.addEventListener('click', function() {
+    confirmationPopup.style.display = 'none';
 });
 
 // Arama fonksiyonu
