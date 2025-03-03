@@ -9,23 +9,23 @@
 <body>
     <header>
         <h1>EnesXVCScripts</h1>
+        <p>Aradığınız scripti bulmak için arama yapın ya da aşağıdaki butonlara tıklayın</p>
+        <input type="text" id="search" placeholder="Script arayın..." oninput="filterButtons()">
     </header>
-
     <main>
-        <div class="button-container">
-            <button class="script-button" id="script1">Script 1</button>
-            <button class="script-button" id="script2">Script 2</button>
-            <button class="script-button" id="script3">Script 3</button>
-            <button class="script-button" id="script4">Script 4</button>
-            <button class="script-button" id="script5">Script 5</button>
+        <div class="buttons">
+            <button class="script-button" data-link="https://example.com/script1">Script 1</button>
+            <button class="script-button" data-link="https://example.com/script2">Script 2</button>
+            <button class="script-button" data-link="https://example.com/script3">Script 3</button>
+            <button class="script-button" data-link="https://example.com/script4">Script 4</button>
+            <button class="script-button" data-link="https://example.com/script5">Script 5</button>
         </div>
-
-        <div class="link-container">
+        <div id="link-output">
             <label for="link">Script Link:</label>
             <input type="text" id="link" readonly>
+            <button id="goButton">Git</button>
         </div>
     </main>
-
     <script src="script.js"></script>
 </body>
 </html>
