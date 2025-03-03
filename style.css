@@ -49,16 +49,6 @@ button:hover {
     background-color: #0056b3;
 }
 
-#link-output {
-    margin-top: 20px;
-    background-color: #e2e2e2;
-    padding: 15px;
-    border-radius: 5px;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 /* Popup styling */
 .popup {
     display: none;
