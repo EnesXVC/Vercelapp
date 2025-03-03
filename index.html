@@ -3,17 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vercel Site</title>
+    <title>EnesXVCScripts</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Vercel ile Yapılmış Basit Site</h1>
+        <h1>EnesXVCScripts</h1>
     </header>
+
     <main>
-        <p>Bu site Vercel üzerinde barındırılıyor!</p>
-        <button id="myButton">Tıkla</button>
+        <div class="button-container">
+            <button class="script-button" id="script1">Script 1</button>
+            <button class="script-button" id="script2">Script 2</button>
+            <button class="script-button" id="script3">Script 3</button>
+            <button class="script-button" id="script4">Script 4</button>
+            <button class="script-button" id="script5">Script 5</button>
+        </div>
+
+        <div class="link-container">
+            <label for="link">Script Link:</label>
+            <input type="text" id="link" readonly>
+        </div>
     </main>
+
     <script src="script.js"></script>
 </body>
 </html>
