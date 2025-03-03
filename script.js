@@ -1,19 +1,33 @@
-document.getElementById('script1').addEventListener('click', function() {
-    document.getElementById('link').value = 'https://example.com/script1';
+// Butonlara tıklama olayını dinliyoruz
+const buttons = document.querySelectorAll('.script-button');
+const linkOutput = document.getElementById('link');
+const goButton = document.getElementById('goButton');
+
+// Her butona tıklanıldığında, ilgili linki input alanına ekleyelim
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        const link = this.getAttribute('data-link');
+        linkOutput.value = link;
+    });
 });
 
-document.getElementById('script2').addEventListener('click', function() {
-    document.getElementById('link').value = 'https://example.com/script2';
+// Git butonuna tıklanıldığında, input'taki URL'ye yönlendirelim
+goButton.addEventListener('click', function() {
+    const url = linkOutput.value;
+    if (url) {
+        window.location.href = url;  // Kullanıcıyı belirtilen URL'ye yönlendirecek
+    }
 });
 
-document.getElementById('script3').addEventListener('click', function() {
-    document.getElementById('link').value = 'https://example.com/script3';
-});
-
-document.getElementById('script4').addEventListener('click', function() {
-    document.getElementById('link').value = 'https://example.com/script4';
-});
-
-document.getElementById('script5').addEventListener('click', function() {
-    document.getElementById('link').value = 'https://example.com/script5';
-});
+// Arama fonksiyonu
+function filterButtons() {
+    const searchTerm = document.getElementById('search').value.toLowerCase();
+    buttons.forEach(button => {
+        const buttonText = button.textContent.toLowerCase();
+        if (buttonText.includes(searchTerm)) {
+            button.style.display = 'inline-block';
+        } else {
+            button.style.display = 'none';
+        }
+    });
+}
