@@ -3,23 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EnesXVC Scripts</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Ghost Scripts Collection</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #ffffff;
+        }
+        input[type="text"] {
+            width: 94%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #252526;
+            color: #d4d4d4;
+        }
+        pre {
+            background-color: #252526;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 10px;
+        }
+        code {
+            font-family: "Courier New", monospace;
+            color: #569cd6;
+        }
+        .hidden {
+            display: none;
+        }
+        .copy-button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007acc;
+            color: #ffffff;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+        .copy-button:hover {
+            background-color: #005a99;
+        }
+    </style>
 </head>
 <body>
-    <div class="game-container">
-        <header>
-            <h1>EnesXVC Scripts</h1>
-            <p>Click the buttons below to access different scripts!</p>
-        </header>
-        
-        <div class="button-container">
-            <button class="scriptButton left" data-url="https://pastebin.com/Piw5bqGq">XVC Hub Script</button>
-            <button class="scriptButton center" data-url="https://pastebin.com/cbMJd5SH">Fake IP Logger Script</button>
-            <button class="scriptButton right" data-url="https://gist.githubusercontent.com/EnesXVC/3f078616e3cacff884097461d62199c1/raw/f7736f1835be8c9ab262989ec0515c00530aa138/breakin2">Break in 2 Script</button>
-        </div>
-    </div>
+    <h1>Ghost Scripts</h1>
+    <input type="text" id="searchInput" placeholder="Search Script" onkeyup="searchCode()">
+    <div id="codeContainer"></div>
 
-    <script src="game.js"></script>
+    <script>
+        const dataUrl = "https://raw.githubusercontent.com/EnesXVC/script/main/scriptsite";
+
+        async function fetchData() {
+            try {
+                const response = await fetch(dataUrl);
+                if (!response.ok) throw new Error('Failed to fetch data');
+                const data = await response.json();
+                renderCodeBlocks(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        function renderCodeBlocks(data) {
+            const container = document.getElementById('codeContainer');
+            container.innerHTML = '';
+
+            for (const [title, codeText] of Object.entries(data)) {
+                const block = document.createElement('div');
+                block.className = 'code-block';
+                block.setAttribute('data-title', title);
+
+                block.innerHTML = `
+                    <h2>${title}</h2>
+                    <pre><code><span class="string">${codeText}</span></code></pre>
+                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                `;
+
+                container.appendChild(block);
+            }
+        }
+
+        function searchCode() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const codeBlocks = document.querySelectorAll('.code-block');
+
+            codeBlocks.forEach(block => {
+                const title = block.getAttribute('data-title').toLowerCase();
+                block.classList.toggle('hidden', !title.includes(input));
+            });
+        }
+
+        function copyCode(button) {
+            const codeElement = button.previousElementSibling.querySelector('code');
+            const text = codeElement.textContent.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 1000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+        window.onload = fetchData;
+    </script>
 </body>
 </html>
