@@ -1,3 +1,8 @@
 {
 "XVC Hub": "loadstring(game:HttpGet('https://pastebin.com/raw/Piw5bqGq'))()"
+"Break in 2 Server Side Script": "loadstring(game:HttpGet('https://gist.githubusercontent.com/EnesXVC/3f078616e3cacff884097461d62199c1/raw/f7736f1835be8c9ab262989ec0515c00530aa138/breakin2'))()"
+"Fake IP Logger": "loadstring(game:HttpGet('https://pastebin.com/raw/cbMJd5SH'))()"
+"Fire Parts Tool For Obbys": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EnesXVC/FireParts/main/Script'))()"
+"Unlock Mouse Script (Keybind Z)": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EnesXVC/UnlockMouse/main/script'))()"
+"Remote Abuse Script": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EnesXVC/remoteabuse/main/script'))()"
 }
