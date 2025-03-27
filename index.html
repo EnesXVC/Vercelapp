@@ -304,26 +304,38 @@
         
         <div id="normal" class="tab-content active">
             <div id="normalScriptsContainer" class="code-container">
-                <div class="no-results">Loading scripts...</div>
+                <!-- Normal scripts will be loaded here -->
             </div>
         </div>
         
         <div id="cracked" class="tab-content">
             <div id="crackedScriptsContainer" class="code-container">
-                <div class="no-results">No cracked scripts available</div>
+                <!-- Cracked scripts will be loaded here -->
             </div>
         </div>
     </div>
 
     <script>
-        // GitHub URLs
-        const NORMAL_SCRIPTS_URL = "https://raw.githubusercontent.com/EnesXVC/Vercelapp/main/Scripts";
-        const CRACKED_SCRIPTS_URL = "https://raw.githubusercontent.com/EnesXVC/Vercelapp/main/Cracked";
+        // Embedded scripts data
+        const scriptsData = {
+            normal: {
+                "XVC Hub": "loadstring(game:HttpGet('https://pastebin.com/raw/Piw5bqGq'))()",
+                "Break in 2 Server Side Script": "loadstring(game:HttpGet('https://gist.githubusercontent.com/EnesXVC/3f078616e3cacff884097461d62199c1/raw/f7736f1835be8c9ab262989ec0515c00530aa138/breakin2'))()",
+                "Fake IP Logger": "loadstring(game:HttpGet('https://pastebin.com/raw/cbMJd5SH'))()",
+                "Fire Parts Tool For Obbys": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EnesXVC/FireParts/main/Script'))()",
+                "Unlock Mouse Script (Keybind Z)": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EnesXVC/UnlockMouse/main/script'))()",
+                "Remote Abuse Script": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EnesXVC/remoteabuse/main/script'))()"
+            },
+            cracked: {
+                "Cracked Script 1": "loadstring(game:HttpGet('https://example.com/cracked1'))()",
+                "Cracked Script 2": "loadstring(game:HttpGet('https://example.com/cracked2'))()"
+            }
+        };
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             setupTabs();
-            fetchData();
+            renderAllCodeBlocks();
         });
 
         function setupTabs() {
@@ -345,35 +357,9 @@
             });
         }
 
-        async function fetchData() {
-            try {
-                // Load normal scripts
-                const normalResponse = await fetch(NORMAL_SCRIPTS_URL);
-                if (!normalResponse.ok) throw new Error('Failed to load normal scripts');
-                const normalData = await normalResponse.json();
-                renderCodeBlocks('normalScriptsContainer', normalData, false);
-                
-                // Try to load cracked scripts (optional)
-                try {
-                    const crackedResponse = await fetch(CRACKED_SCRIPTS_URL);
-                    if (crackedResponse.ok) {
-                        const crackedData = await crackedResponse.json();
-                        renderCodeBlocks('crackedScriptsContainer', crackedData, true);
-                    } else {
-                        document.getElementById('crackedScriptsContainer').innerHTML = 
-                            '<div class="no-results">No cracked scripts available</div>';
-                    }
-                } catch (e) {
-                    console.log('Cracked scripts not available:', e);
-                    document.getElementById('crackedScriptsContainer').innerHTML = 
-                        '<div class="no-results">No cracked scripts available</div>';
-                }
-            } catch (error) {
-                console.error('Using default scripts:', error);
-                renderCodeBlocks('normalScriptsContainer', DEFAULT_SCRIPTS, false);
-                document.getElementById('crackedScriptsContainer').innerHTML = 
-                    '<div class="no-results">No cracked scripts available</div>';
-            }
+        function renderAllCodeBlocks() {
+            renderCodeBlocks('normalScriptsContainer', scriptsData.normal, false);
+            renderCodeBlocks('crackedScriptsContainer', scriptsData.cracked, true);
         }
 
         function renderCodeBlocks(containerId, data, isCracked) {
