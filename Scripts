@@ -1,4 +1,3 @@
 {
- "Account Age Detector": "loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/Test4/refs/heads/main/Account%20Age%20Detector'))()",
-  "XVC Hub": "loadstring(game:HttpGet("https://pastebin.com/raw/Piw5bqGq"))()"
+"XVC Hub": "loadstring(game:HttpGet('https://pastebin.com/raw/Piw5bqGq'))()"
 }
