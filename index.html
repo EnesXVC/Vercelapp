@@ -169,7 +169,7 @@
     <div class="container">
         <header>
             <h1>EnesXVC Scripts</h1>
-            <p>Best scripts</p>
+            <p>A collection of useful scripts</p>
         </header>
         
         <div class="search-container">
@@ -212,8 +212,8 @@
                 card.setAttribute('data-title', title.toLowerCase());
                 card.setAttribute('data-code', codeText.toLowerCase());
                 
-                // Format the code display - replace quotes with consistent style
-                const formattedCode = formatCodeDisplay(codeText);
+                // Escape HTML entities but keep the original quotes
+                const formattedCode = escapeHtml(codeText);
                 
                 card.innerHTML = `
                     <div class="card-header">
@@ -231,12 +231,13 @@
             }
         }
 
-        function formatCodeDisplay(code) {
-            // This function formats the code for display without changing its functionality
-            // Replace all quotes with double quotes for consistency in display
-            return code.replace(/'/g, '"')
-                      .replace(/</g, '&lt;')
-                      .replace(/>/g, '&gt;');
+        function escapeHtml(text) {
+            // Escape HTML special characters but preserve the original quotes
+            return text.replace(/&/g, "&amp;")
+                       .replace(/</g, "&lt;")
+                       .replace(/>/g, "&gt;")
+                       .replace(/"/g, '"')
+                       .replace(/'/g, "'");
         }
 
         function searchCode() {
@@ -263,10 +264,8 @@
 
         function copyCode(button) {
             const codeElement = button.closest('.code-card').querySelector('code');
-            const originalText = codeElement.textContent;
-            
-            // Revert the display formatting back to original quotes before copying
-            const textToCopy = originalText.replace(/"/g, "'");
+            // Get the raw text content (including original quotes)
+            const textToCopy = codeElement.textContent;
             
             navigator.clipboard.writeText(textToCopy).then(() => {
                 button.textContent = 'Copied!';
