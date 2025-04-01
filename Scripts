@@ -1,5 +1,0 @@
-{
-  "Script 1": "loadstring(game:HttpGet('script1.com'))()",
-  "Script 2": "loadstring(game:HttpGet(\"script2.com\"))()",
-  "Script 3": "print('Hello World')"
-}
