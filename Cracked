@@ -1,3 +1,0 @@
-{
-"nfernium Hub Premium Script": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EnesXVC/Combat-Warriors/main/script.lua'))()"
-}
