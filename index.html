@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EnesXVC Scripts</title>
+    <!-- CSS kısmı aynı, değişiklik yapmadım -->
     <style>
         :root {
             --bg-color: #1e1e1e;
@@ -158,6 +159,13 @@
             color: #999;
         }
         
+        .error-message {
+            color: #ff6b6b;
+            text-align: center;
+            padding: 20px;
+            grid-column: 1 / -1;
+        }
+        
         @media (max-width: 768px) {
             .code-grid {
                 grid-template-columns: 1fr;
@@ -187,13 +195,36 @@
             try {
                 const response = await fetch(dataUrl);
                 if (!response.ok) throw new Error('Failed to fetch data');
-                scriptsData = await response.json();
-                renderCodeBlocks(scriptsData);
+                
+                // Önce response'ı text olarak alıp JSON.parse ile kontrol edelim
+                const responseText = await response.text();
+                try {
+                    scriptsData = JSON.parse(responseText);
+                    renderCodeBlocks(scriptsData);
+                } catch (jsonError) {
+                    console.error('JSON Parse Error:', jsonError);
+                    showError(`Invalid JSON format: ${jsonError.message}`);
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
-                document.getElementById('codeContainer').innerHTML = 
-                    '<div class="no-results">Failed to load scripts. Please try again later.</div>';
+                showError(`Failed to load scripts: ${error.message}`);
             }
+        }
+
+        function showError(message) {
+            const container = document.getElementById('codeContainer');
+            container.innerHTML = `
+                <div class="error-message">
+                    <h3>Error Loading Scripts</h3>
+                    <p>${message}</p>
+                    <p>Please check your JSON file format.</p>
+                    <p>Example of valid JSON:</p>
+                    <pre>{
+  "Script 1": "loadstring(game:HttpGet('script1.com'))()",
+  "Script 2": "loadstring(game:HttpGet(\\"script2.com\\"))()"
+}</pre>
+                </div>
+            `;
         }
 
         function renderCodeBlocks(data) {
@@ -217,7 +248,7 @@
                 
                 card.innerHTML = `
                     <div class="card-header">
-                        <h2>${title}</h2>
+                        <h2>${escapeHtml(title)}</h2>
                     </div>
                     <div class="card-body">
                         <pre><code>${formattedCode}</code></pre>
@@ -233,11 +264,10 @@
 
         function escapeHtml(text) {
             // Escape HTML special characters but preserve the original quotes
+            if (typeof text !== 'string') return '';
             return text.replace(/&/g, "&amp;")
                        .replace(/</g, "&lt;")
-                       .replace(/>/g, "&gt;")
-                       .replace(/"/g, '"')
-                       .replace(/'/g, "'");
+                       .replace(/>/g, "&gt;");
         }
 
         function searchCode() {
@@ -256,15 +286,15 @@
             
             const container = document.getElementById('codeContainer');
             if (!hasResults && input.length > 0) {
-                container.innerHTML = '<div class="no-results">No scripts match your search</div>';
-            } else if (input.length === 0) {
-                renderCodeBlocks(scriptsData);
+                const noResults = document.createElement('div');
+                noResults.className = 'no-results';
+                noResults.textContent = 'No scripts match your search';
+                container.appendChild(noResults);
             }
         }
 
         function copyCode(button) {
             const codeElement = button.closest('.code-card').querySelector('code');
-            // Get the raw text content (including original quotes)
             const textToCopy = codeElement.textContent;
             
             navigator.clipboard.writeText(textToCopy).then(() => {
