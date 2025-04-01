@@ -5,113 +5,285 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EnesXVC Scripts</title>
     <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --text-color: #d4d4d4;
+            --header-color: #ffffff;
+            --input-bg: #252526;
+            --border-color: #333;
+            --code-bg: #252526;
+            --code-color: #569cd6;
+            --button-bg: #007acc;
+            --button-hover: #005a99;
+            --card-bg: #2d2d2d;
+        }
+        
         body {
-            background-color: #1e1e1e;
-            color: #d4d4d4;
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
         }
-        h1, h2 {
-            color: #ffffff;
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        input[type="text"] {
-            width: 94%;
-            padding: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #333;
-            border-radius: 5px;
-            background-color: #252526;
-            color: #d4d4d4;
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
         }
-        pre {
-            background-color: #252526;
-            padding: 10px;
-            border: 1px solid #333;
-            border-radius: 5px;
-            overflow-x: auto;
+        
+        h1 {
+            color: var(--header-color);
             margin-bottom: 10px;
+            font-size: 2.5rem;
         }
+        
+        .search-container {
+            margin-bottom: 30px;
+        }
+        
+        #searchInput {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--button-bg);
+        }
+        
+        .code-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .code-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        
+        .code-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .card-header h2 {
+            margin: 0;
+            color: var(--header-color);
+            font-size: 1.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .card-body {
+            padding: 15px;
+        }
+        
+        pre {
+            margin: 0;
+            padding: 0;
+            background-color: transparent !important;
+        }
+        
         code {
-            font-family: "Courier New", monospace;
-            color: #569cd6;
+            display: block;
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: var(--code-color);
+            white-space: pre-wrap;
+            word-break: break-all;
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 1.4;
         }
+        
+        .card-footer {
+            padding: 15px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .copy-button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--button-bg);
+            color: var(--header-color);
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        
+        .copy-button:hover {
+            background-color: var(--button-hover);
+        }
+        
+        .copy-button.copied {
+            background-color: #4CAF50;
+        }
+        
         .hidden {
             display: none;
         }
-        .copy-button {
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007acc;
-            color: #ffffff;
-            cursor: pointer;
-            margin-bottom: 30px;
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            grid-column: 1 / -1;
+            color: #999;
         }
-        .copy-button:hover {
-            background-color: #005a99;
+        
+        @media (max-width: 768px) {
+            .code-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>EnesXVC Scripts</h1>
-    <input type="text" id="searchInput" placeholder="Search Script" onkeyup="searchCode()">
-    <div id="codeContainer"></div>
+    <div class="container">
+        <header>
+            <h1>EnesXVC Scripts</h1>
+            <p>Best scripts</p>
+        </header>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search scripts..." onkeyup="searchCode()">
+        </div>
+        
+        <div class="code-grid" id="codeContainer"></div>
+    </div>
 
     <script>
         const dataUrl = "https://raw.githubusercontent.com/EnesXVC/Vercelapp/main/Scripts";
+        let scriptsData = {};
 
         async function fetchData() {
             try {
                 const response = await fetch(dataUrl);
                 if (!response.ok) throw new Error('Failed to fetch data');
-                const data = await response.json();
-                renderCodeBlocks(data);
+                scriptsData = await response.json();
+                renderCodeBlocks(scriptsData);
             } catch (error) {
                 console.error('Error fetching data:', error);
+                document.getElementById('codeContainer').innerHTML = 
+                    '<div class="no-results">Failed to load scripts. Please try again later.</div>';
             }
         }
 
         function renderCodeBlocks(data) {
             const container = document.getElementById('codeContainer');
+            
+            if (!data || Object.keys(data).length === 0) {
+                container.innerHTML = '<div class="no-results">No scripts found</div>';
+                return;
+            }
+            
             container.innerHTML = '';
-
+            
             for (const [title, codeText] of Object.entries(data)) {
-                const block = document.createElement('div');
-                block.className = 'code-block';
-                block.setAttribute('data-title', title);
-
-                block.innerHTML = `
-                    <h2>${title}</h2>
-                    <pre><code><span class="string">${codeText}</span></code></pre>
-                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                const card = document.createElement('div');
+                card.className = 'code-card';
+                card.setAttribute('data-title', title.toLowerCase());
+                card.setAttribute('data-code', codeText.toLowerCase());
+                
+                // Format the code display - replace quotes with consistent style
+                const formattedCode = formatCodeDisplay(codeText);
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h2>${title}</h2>
+                    </div>
+                    <div class="card-body">
+                        <pre><code>${formattedCode}</code></pre>
+                    </div>
+                    <div class="card-footer">
+                        <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
                 `;
-
-                container.appendChild(block);
+                
+                container.appendChild(card);
             }
         }
 
-        function searchCode() {
-            const input = document.getElementById('searchInput').value.toLowerCase();
-            const codeBlocks = document.querySelectorAll('.code-block');
+        function formatCodeDisplay(code) {
+            // This function formats the code for display without changing its functionality
+            // Replace all quotes with double quotes for consistency in display
+            return code.replace(/'/g, '"')
+                      .replace(/</g, '&lt;')
+                      .replace(/>/g, '&gt;');
+        }
 
-            codeBlocks.forEach(block => {
-                const title = block.getAttribute('data-title').toLowerCase();
-                block.classList.toggle('hidden', !title.includes(input));
+        function searchCode() {
+            const input = document.getElementById('searchInput').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.code-card');
+            let hasResults = false;
+            
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title');
+                const code = card.getAttribute('data-code');
+                const matches = title.includes(input) || code.includes(input);
+                
+                card.classList.toggle('hidden', !matches);
+                if (matches) hasResults = true;
             });
+            
+            const container = document.getElementById('codeContainer');
+            if (!hasResults && input.length > 0) {
+                container.innerHTML = '<div class="no-results">No scripts match your search</div>';
+            } else if (input.length === 0) {
+                renderCodeBlocks(scriptsData);
+            }
         }
 
         function copyCode(button) {
-            const codeElement = button.previousElementSibling.querySelector('code');
-            const text = codeElement.textContent.trim();
-            navigator.clipboard.writeText(text).then(() => {
+            const codeElement = button.closest('.code-card').querySelector('code');
+            const originalText = codeElement.textContent;
+            
+            // Revert the display formatting back to original quotes before copying
+            const textToCopy = originalText.replace(/"/g, "'");
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
                 button.textContent = 'Copied!';
+                button.classList.add('copied');
                 setTimeout(() => {
                     button.textContent = 'Copy';
-                }, 1000);
+                    button.classList.remove('copied');
+                }, 2000);
             }).catch(err => {
                 console.error('Failed to copy:', err);
+                button.textContent = 'Error!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 2000);
             });
         }
+
         window.onload = fetchData;
     </script>
 </body>
