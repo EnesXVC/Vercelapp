@@ -4,490 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EnesXVC Scripts</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #1a1a1e;
-            --card-bg: #252529;
-            --text-color: #e0e0e0;
-            --text-light: #ffffff;
-            --primary: #6e48aa;
-            --primary-hover: #5d3a99;
-            --accent: #ff7d5e;
-            --border: #38383d;
-            --radius: 8px;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --tab-active: #6e48aa;
-            --tab-inactive: #3a3a40;
-            --string: #a5e075;
-            --keyword: #ff7d5e;
-            --function: #5eb3ff;
-            --comment: #6a7989;
-            --number: #b78aff;
-        }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+        h1, h2 {
+            color: #ffffff;
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 2rem;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        h1 {
-            color: var(--text-light);
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-        }
-
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-            gap: 0.5rem;
-            animation: slideDown 0.5s ease-out;
-        }
-
-        .tab {
-            padding: 0.75rem 1.5rem;
-            background-color: var(--tab-inactive);
-            color: var(--text-color);
-            border: none;
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-weight: 500;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tab::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 3px;
-            background: var(--primary);
-            transition: var(--transition);
-            transform: translateX(-50%);
-        }
-
-        .tab:hover {
-            background-color: #4a4a50;
-        }
-
-        .tab.active {
-            background-color: var(--tab-active);
-            color: white;
-        }
-
-        .tab.active::after {
-            width: 100%;
-        }
-
-        .search-container {
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            animation: fadeIn 0.6s ease-out 0.2s both;
-        }
-
         input[type="text"] {
-            width: 100%;
-            padding: 14px 18px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            font-size: 1rem;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
+            width: 94%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #252526;
+            color: #d4d4d4;
         }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(110, 72, 170, 0.3);
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        #codeContainer {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .code-block {
-            background-color: var(--card-bg);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.5s ease-out forwards;
-        }
-
-        .code-block:hover {
-            transform: translateY(-5px) !important;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .code-header {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .code-title {
-            margin: 0;
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-
-        .code-badge {
-            background-color: var(--accent);
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
         pre {
-            margin: 0;
-            padding: 1.5rem;
+            background-color: #252526;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
             overflow-x: auto;
+            margin-bottom: 10px;
         }
-
         code {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-family: "Courier New", monospace;
+            color: #569cd6;
         }
-
-        .string { color: var(--string); }
-        .keyword { color: var(--keyword); font-weight: 500; }
-        .function { color: var(--function); }
-        .comment { color: var(--comment); font-style: italic; }
-        .number { color: var(--number); }
-        .operator { color: var(--text-color); }
-        .table { color: #ffb85e; }
-
-        .code-actions {
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: flex-end;
-            border-top: 1px solid var(--border);
-        }
-
-        .copy-button {
-            padding: 8px 16px;
-            border: none;
-            border-radius: var(--radius);
-            background-color: var(--primary);
-            color: var(--text-light);
-            cursor: pointer;
-            font-weight: 500;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .copy-button:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-
-        .copy-button:active {
-            transform: translateY(0);
-        }
-
-        .copy-button.copied {
-            background-color: #4CAF50;
-        }
-
         .hidden {
             display: none;
         }
-
-        .no-results {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-color);
-            font-size: 1.1rem;
-            animation: fadeIn 0.6s ease-out;
+        .copy-button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007acc;
+            color: #ffffff;
+            cursor: pointer;
+            margin-bottom: 30px;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 1.5rem;
-            }
-            
-            #codeContainer {
-                grid-template-columns: 1fr;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .tabs {
-                flex-wrap: wrap;
-            }
+        .copy-button:hover {
+            background-color: #005a99;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>EnesXVC Scripts</h1>
-        </header>
-        
-        <div class="tabs">
-            <button class="tab active" data-tab="normal">Normal Scripts</button>
-            <button class="tab" data-tab="cracked">Cracked Scripts</button>
-        </div>
-        
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search scripts..." onkeyup="searchCode()">
-        </div>
-        
-        <div id="normal" class="tab-content active">
-            <div id="normalScriptsContainer" class="code-container">
-                <!-- Normal scripts will be loaded here -->
-            </div>
-        </div>
-        
-        <div id="cracked" class="tab-content">
-            <div id="crackedScriptsContainer" class="code-container">
-                <!-- Cracked scripts will be loaded here -->
-            </div>
-        </div>
-    </div>
+    <h1>Ghost Scripts</h1>
+    <input type="text" id="searchInput" placeholder="Search Script" onkeyup="searchCode()">
+    <div id="codeContainer"></div>
 
     <script>
-        // Embedded scripts data
-        const scriptsData = {
-            normal: {
-                "XVC Hub": "loadstring(game:HttpGet('https://pastebin.com/raw/Piw5bqGq'))()",
-                "Break in 2 Server Side Script": "loadstring(game:HttpGet('https://gist.githubusercontent.com/EnesXVC/3f078616e3cacff884097461d62199c1/raw/f7736f1835be8c9ab262989ec0515c00530aa138/breakin2'))()",
-                "Fake IP Logger": "loadstring(game:HttpGet('https://pastebin.com/raw/cbMJd5SH'))()",
-                "Fire Parts Tool For Obbys": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EnesXVC/FireParts/main/Script'))()",
-                "Unlock Mouse Script (Keybind Z)": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EnesXVC/UnlockMouse/main/script'))()",
-                "Remote Abuse Script": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EnesXVC/remoteabuse/main/script'))()"
-            },
-            cracked: {
-                "Cracked Script 1": "loadstring(game:HttpGet('https://example.com/cracked1'))()",
-                "Cracked Script 2": "loadstring(game:HttpGet('https://example.com/cracked2'))()"
+        const dataUrl = "https://raw.githubusercontent.com/GhostPlayer352/Ghost-Scripts/refs/heads/main/Scripts";
+
+        async function fetchData() {
+            try {
+                const response = await fetch(dataUrl);
+                if (!response.ok) throw new Error('Failed to fetch data');
+                const data = await response.json();
+                renderCodeBlocks(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
             }
-        };
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            setupTabs();
-            renderAllCodeBlocks();
-        });
-
-        function setupTabs() {
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    // Remove active class from all tabs and contents
-                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    
-                    // Add active class to clicked tab and corresponding content
-                    tab.classList.add('active');
-                    const tabId = tab.getAttribute('data-tab');
-                    document.getElementById(tabId).classList.add('active');
-                    
-                    // Refresh search when switching tabs
-                    searchCode();
-                });
-            });
         }
 
-        function renderAllCodeBlocks() {
-            renderCodeBlocks('normalScriptsContainer', scriptsData.normal, false);
-            renderCodeBlocks('crackedScriptsContainer', scriptsData.cracked, true);
-        }
-
-        function renderCodeBlocks(containerId, data, isCracked) {
-            const container = document.getElementById(containerId);
+        function renderCodeBlocks(data) {
+            const container = document.getElementById('codeContainer');
             container.innerHTML = '';
 
-            if (!data || Object.keys(data).length === 0) {
-                container.innerHTML = '<div class="no-results">No scripts available</div>';
-                return;
-            }
-
-            let index = 0;
             for (const [title, codeText] of Object.entries(data)) {
                 const block = document.createElement('div');
                 block.className = 'code-block';
-                block.setAttribute('data-title', title.toLowerCase());
-                block.style.animationDelay = `${index * 0.1}s`;
+                block.setAttribute('data-title', title);
 
                 block.innerHTML = `
-                    <div class="code-header">
-                        <h3 class="code-title">${title}</h3>
-                        ${isCracked ? '<span class="code-badge">CRACKED</span>' : ''}
-                    </div>
-                    <pre><code>${highlightLuaCode(escapeHtml(codeText))}</code></pre>
-                    <div class="code-actions">
-                        <button class="copy-button" onclick="copyCode(this)">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                            </svg>
-                            Copy Code
-                        </button>
-                    </div>
+                    <h2>${title}</h2>
+                    <pre><code><span class="string">${codeText}</span></code></pre>
+                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
                 `;
 
                 container.appendChild(block);
-                index++;
             }
-        }
-
-        function highlightLuaCode(code) {
-            // Highlight Lua keywords
-            const keywords = ['local', 'function', 'end', 'if', 'then', 'else', 'elseif', 
-                             'for', 'while', 'do', 'repeat', 'until', 'in', 'return', 'break', 
-                             'and', 'or', 'not', 'nil', 'true', 'false'];
-            
-            // Highlight functions
-            code = code.replace(/(\w+)\(/g, '<span class="function">$1</span>(');
-            
-            // Highlight keywords
-            keywords.forEach(kw => {
-                const regex = new RegExp(`\\b${kw}\\b`, 'g');
-                code = code.replace(regex, `<span class="keyword">${kw}</span>`);
-            });
-            
-            // Highlight strings
-            code = code.replace(/(['"])(.*?)\1/g, '<span class="string">$1$2$1</span>');
-            
-            // Highlight numbers
-            code = code.replace(/\b(\d+\.?\d*)\b/g, '<span class="number">$1</span>');
-            
-            // Highlight comments
-            code = code.replace(/--(.*)/g, '<span class="comment">--$1</span>');
-            
-            // Highlight tables
-            code = code.replace(/\b(table\.\w+)\b/g, '<span class="table">$1</span>');
-            
-            return code;
-        }
-
-        function escapeHtml(unsafe) {
-            return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
         }
 
         function searchCode() {
-            const input = document.getElementById('searchInput').value.toLowerCase().trim();
-            const activeTab = document.querySelector('.tab-content.active').id;
-            const containerId = activeTab === 'normal' ? 'normalScriptsContainer' : 'crackedScriptsContainer';
-            const codeBlocks = document.querySelectorAll(`#${containerId} .code-block`);
-            const noResults = document.querySelector(`#${containerId} .no-results`);
-            
-            let visibleCount = 0;
-            
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const codeBlocks = document.querySelectorAll('.code-block');
+
             codeBlocks.forEach(block => {
-                const title = block.getAttribute('data-title');
-                const isVisible = title.includes(input);
-                block.classList.toggle('hidden', !isVisible);
-                if (isVisible) visibleCount++;
+                const title = block.getAttribute('data-title').toLowerCase();
+                block.classList.toggle('hidden', !title.includes(input));
             });
-            
-            if (noResults) {
-                noResults.classList.toggle('hidden', visibleCount > 0 || input === '');
-            }
         }
 
         function copyCode(button) {
-            const codeElement = button.closest('.code-block').querySelector('code');
+            const codeElement = button.previousElementSibling.querySelector('code');
             const text = codeElement.textContent.trim();
-            
             navigator.clipboard.writeText(text).then(() => {
-                button.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    Copied!
-                `;
-                button.classList.add('copied');
-                
+                button.textContent = 'Copied!';
                 setTimeout(() => {
-                    button.innerHTML = `
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                        </svg>
-                        Copy Code
-                    `;
-                    button.classList.remove('copied');
-                }, 2000);
+                    button.textContent = 'Copy';
+                }, 1000);
             }).catch(err => {
                 console.error('Failed to copy:', err);
-                button.textContent = 'Error!';
             });
         }
+        window.onload = fetchData;
     </script>
 </body>
 </html>
