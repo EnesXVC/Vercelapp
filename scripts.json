@@ -1,7 +1,5 @@
 {
   "XVC Hub": "loadstring(game:HttpGet(\"https://pastebin.com/raw/Piw5bqGq\"))()",
   "Fire Parts Tool": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/EnesXVC/FireParts/main/Script\"))()",
-  "Fake IP Logger": "loadstring(game:HttpGet(\"https://pastebin.com/raw/cbMJd5SH\"))()",
-  "Unlock Mouse": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/EnesXVC/UnlockMouse/main/script\"))()",
-  "Natural Disaster Survival - Detect Disaster Script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/EnesXVC/NaturalDisasterSurvival/main/Detect-Disasters\"))()"
+  "Fake IP Logger": "loadstring(game:HttpGet(\"https://pastebin.com/raw/cbMJd5SH\"))()"
 }
